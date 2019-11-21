@@ -9,3 +9,14 @@ C:\Users\hashm\projects\test\obj\Debug\netcoreapp2.2\test.AssemblyInfoInputs.cac
 C:\Users\hashm\projects\test\obj\Debug\netcoreapp2.2\test.AssemblyInfo.cs
 C:\Users\hashm\projects\test\obj\Debug\netcoreapp2.2\test.dll
 C:\Users\hashm\projects\test\obj\Debug\netcoreapp2.2\test.pdb
+C:\Users\hashm\projects\dissertation\Dissertation\bin\Debug\netcoreapp2.2\test.deps.json
+C:\Users\hashm\projects\dissertation\Dissertation\bin\Debug\netcoreapp2.2\test.runtimeconfig.json
+C:\Users\hashm\projects\dissertation\Dissertation\bin\Debug\netcoreapp2.2\test.runtimeconfig.dev.json
+C:\Users\hashm\projects\dissertation\Dissertation\bin\Debug\netcoreapp2.2\test.dll
+C:\Users\hashm\projects\dissertation\Dissertation\bin\Debug\netcoreapp2.2\test.pdb
+C:\Users\hashm\projects\dissertation\Dissertation\obj\Debug\netcoreapp2.2\test.csprojAssemblyReference.cache
+C:\Users\hashm\projects\dissertation\Dissertation\obj\Debug\netcoreapp2.2\test.csproj.CoreCompileInputs.cache
+C:\Users\hashm\projects\dissertation\Dissertation\obj\Debug\netcoreapp2.2\test.AssemblyInfoInputs.cache
+C:\Users\hashm\projects\dissertation\Dissertation\obj\Debug\netcoreapp2.2\test.AssemblyInfo.cs
+C:\Users\hashm\projects\dissertation\Dissertation\obj\Debug\netcoreapp2.2\test.dll
+C:\Users\hashm\projects\dissertation\Dissertation\obj\Debug\netcoreapp2.2\test.pdb

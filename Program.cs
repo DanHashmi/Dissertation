@@ -2,9 +2,9 @@
 
 namespace test
 {
-    class Program: TankResidents
+    class Program: TemperateTankResidents
     {
-        static void Main(string[] args)
+        static void Main()
         {
         string userInput;
         string userInput1;
