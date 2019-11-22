@@ -9,6 +9,19 @@ public class DropDownExample : MonoBehaviour
     List<string> names = new List<string>() {"Please Select Aquarium","ColdwaterA", "ColdwaterB", "TemperateA", "TemperateB", "TropicalA", "TropicalB"};
     public Dropdown dropdown;
     public Text SelectedName;
+    public int intVal;
+    [SerializeField]
+    private InputField input;
+    // string userInput;
+    // string userInput1;
+    // float intVal;
+    // int Points;
+    // int WhiteMinnow = 2;
+    // int AquariumA = 50;
+    // int AquariumB = 70;
+        
+    // ConsoleKeyInfo confirm;
+    
     public void DropDown_IndexChanged(int index)
     {
         SelectedName.text = names[index];
@@ -16,6 +29,11 @@ public class DropDownExample : MonoBehaviour
         if(index == 0)
         {
             SelectedName.color = Color.red;
+        }
+        
+        else if (index == 2)
+        {
+            Debug.Log("This is " + intVal);
         }
         
         else 
@@ -37,13 +55,10 @@ public class DropDownExample : MonoBehaviour
         
         dropdown.AddOptions(names);
     }
-    
-    void Update()
+    public void GetInput(string guess)
     {
-        if(dropdown.value == 2)
-        {
-            Console.WriteLine("Hello!");
-        }
-
+        Debug.Log("You Entered " + guess);
+        intVal = Convert.ToInt32(guess);
+        input.text = "";
     }
 }
