@@ -1,0 +1,15 @@
+ID,Name,PointsValue,TrafficLightsColour,Skin
+1,Temp Rosy Barb,3,Amber,Sphere
+2,Tropical Rosy Barb,3,Amber,Sphere
+3,Amano Shrimp,1,Green,Sphere
+4,Freshwater Shrimp,0,Green,Sphere
+5,White Minnow,1,Green,Sphere
+6,Gold Minnow,1,Green,Sphere
+7,Assorted Danio,1,Green,Sphere
+8,Red Spotted Snail,0,Green,Sphere
+9,Red Lips Snail,0,Green,Sphere
+10,Spiral Horn Snail,0,Green,Sphere
+11,Sucking Loach,4,Amber,Sphere
+12,Temp Sucking Loach,4,Amber,Sphere
+13,Variatus Platy,2,Green,Sphere
+14,Black Corydoras,4,Green,Sphere

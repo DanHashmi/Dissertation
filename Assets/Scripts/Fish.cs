@@ -30,7 +30,7 @@ public class Fish : MonoBehaviour
 
 		if(turning) 
 		{
-			Vector3 direction = Vector3.zero - transform.position;
+			Vector3 direction = newGoalPos - transform.position;
 			transform.rotation = Quaternion.Slerp (transform.rotation,
 				Quaternion.LookRotation (direction),
 				TurnSpeed () * Time.deltaTime);
@@ -39,7 +39,7 @@ public class Fish : MonoBehaviour
 		} 
 		else 
 		{
-			if (Random.Range (0, 5) < 1) //used to be 10
+			if (Random.Range (0, 10) < 1) //used to be 5
 				ApplyRules ();
 		}
 
@@ -58,7 +58,7 @@ public class Fish : MonoBehaviour
 	}
 	// void OnTriggerEnter(Collider other)
 	// {
-	// 	if(turning)
+	// 	if(!turning)
 	// 	{
 	// 		newGoalPos = this.transform.position - other.gameObject.transform.position;
 	// 	}
@@ -92,7 +92,7 @@ public class Fish : MonoBehaviour
 					vCenter += go.transform.position;
 					groupSize++;
 
-					if(dist < 2.0f)  //could change
+					if(dist < 2.0f)  //could change, increase for big fish
 					{
 						vAvoid = vAvoid + (this.transform.position - go.transform.position);
 					}

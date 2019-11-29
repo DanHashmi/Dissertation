@@ -9,12 +9,14 @@ namespace fishtanksoftware
 
 public class DropDownExample : MonoBehaviour
 {
-    List<string> names = new List<string>() {"Please Select Aquarium","ColdwaterA", "ColdwaterB", "TemperateA", "TemperateB", "TropicalA", "TropicalB"};
+    List<string> names = new List<string>() {"Please Select Aquarium","Coldwater", "Temperate", "Tropical"};
     public Dropdown dropdown;
     public Text SelectedName;
-    [SerializeField]
-    private float intValue;
-    public static int test = 10;
+    private int intValue;
+    private int litres;
+    // public static int test = 10;
+    private string AqType;
+    
     
 
     [SerializeField]
@@ -32,6 +34,8 @@ public class DropDownExample : MonoBehaviour
         else 
         {
             SelectedName.color = Color.white;
+            AqType = dropdown.options[dropdown.value].text;
+            PlayerPrefs.SetString("AquariumType", AqType);
            // Debug.Log("this is " + intValue);
         }
     }
@@ -52,11 +56,12 @@ public class DropDownExample : MonoBehaviour
     public void GetInput(string guess)
     {
         Debug.Log("You Entered " + guess);
-        //intValue = Convert.ToInt32(guess);
-        bool result = Single.TryParse (guess, out intValue);
+       
+        bool result = Int32.TryParse(guess, out litres);
         if(result)
         {
-            PlayerPrefs.SetString("AquariumPoints", guess);
+            intValue = litres/2;
+            PlayerPrefs.SetInt("AquariumPoints", intValue);
         }
         else
         {

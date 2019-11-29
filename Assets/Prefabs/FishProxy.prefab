@@ -51,7 +51,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179140}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -116,8 +116,10 @@ Animation:
   m_GameObject: {fileID: 179140}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animation: {fileID: 8450349730359761091, guid: 035a8130f4329504aaa80f75dc72628d,
+    type: 3}
+  m_Animations:
+  - {fileID: 8450349730359761091, guid: 035a8130f4329504aaa80f75dc72628d, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0

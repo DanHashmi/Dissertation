@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/StartScene.unity
+    guid: 667ebcbe9f09bec4bb196b80b6df3310
+  - enabled: 1
+    path: Assets/_Scenes/Tank.unity
+    guid: dcd698b5af24147ba9fdcbd12308eb72
+  - enabled: 1
+    path: Assets/_Scenes/TestScene.unity
+    guid: abc51c06841c75a439c60ea8b2118f7f
+  m_configObjects: {}

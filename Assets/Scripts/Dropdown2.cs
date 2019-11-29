@@ -9,42 +9,40 @@ namespace fishtanksoftware
 
 public class Dropdown2 : MonoBehaviour
 {
-    //trying trying1 = new trying();
+    //LoadData loaddata= new LoadData();
+    public TextAsset TemperateTankResidents;
+    public TextAsset TropicalTankResidents;
+    public TextAsset ColdwaterTankResidents;
+    List<TempFish> TempResidents = new List<TempFish>();
     //DropDownExample drop = new DropDownExample();
-    List<string> names = new List<string>() {"Please Select Fish","Neon Tetra", "Guppy", "Goldfish", "Red Snail", "Snail 2", "Shrimp", "Goldfish 1", "Goldfish 2", "Goldfish 3"};
+    //List<string> names = new List<string>() {"Please Select Fish","Neon Tetra", "Guppy", "Goldfish", "Red Snail", "Snail 2", "Shrimp", "Goldfish 1", "Goldfish 2", "Goldfish 3"};
     public Dropdown dropdown;
     public Text SelectedName;
-    public int intAquarium;
     
     [SerializeField]
     private InputField inputField1;
 
-    public float intVal;
+    private int intVal;
+    private int Fpoints;
     
-    public bool result;
+    private bool result;
     //public string guess;
-    public float Points;
+    //public float Points;
 
     public void DropDown_IndexChanged(int index)
     {
-        SelectedName.text = names[index];
+        SelectedName.text = TempResidents[index].Name;
 
         if(index == 0)
         {
             SelectedName.color = Color.red;
+            RetrieveValues();
         }
 
-        // else if(index == 1)
-        // {
-        //     Debug.Log("please");  
-        // }
-        
         else 
         {
             SelectedName.color = Color.white;
-            string madness = PlayerPrefs.GetString("AquariumPoints");
-            intAquarium = Convert.ToInt32(madness);
-            //Debug.Log($"Please work {intAquarium}");
+            RetrieveValues();
             
         }
     }
@@ -52,38 +50,68 @@ public class Dropdown2 : MonoBehaviour
     
     void Start()
     {
-        PopulateList();
+        string aq = PlayerPrefs.GetString("AquariumType");
+        string[] tempdata = TemperateTankResidents.text.Split(new char[] {'\n'} );
+        string[] tropdata = TropicalTankResidents.text.Split(new char[] {'\n'} );
+        string[] colddata = ColdwaterTankResidents.text.Split(new char[] {'\n'} );
+
+        if(aq == "Temperate")
+        {
+            PopulateList(tempdata); 
+        }
+        
+        else if(aq == "Tropical")
+        {
+            PopulateList(tropdata);
+        }
+
+        else if(aq == "Coldwater")
+        {
+            PopulateList(colddata);
+        }
+
+        else
+        {
+            Debug.Log("Please select Aquarium!"); // need to work around go button
+        }
     }
      
-    void PopulateList()
+    void PopulateList(string[] data)
     {
-        // public string path = @"C:\Users\hashm\Downloads\newfishtank\Fish\Assets\Sardine\Scripts";
-        // Get list from file
+        for(int i = 1; i < data.Length - 1; i++)
+        {
+            string[] row = data[i].Split(new char[] {','});
+            
+            if (row [1] != "") // Check if row is empty
+            {
+                TempFish temp = new TempFish();
+                int.TryParse(row[0], out temp.ID);
+                temp.Name = row[1];
+                List<string> names = new List<string>(){temp.Name};
+                int.TryParse(row[2], out temp.PointsValue);
+                temp.TrafficLightsColour = row[3];
+                temp.Skin = row[4];
+                dropdown.AddOptions(names);
+                TempResidents.Add(temp);
+            }
+            
+        }
         
-        dropdown.AddOptions(names);
     }
 
     public void GetInput(string guess)
     {
         //Debug.Log("You Entered " + guess);
         //intVal = Convert.ToInt32(guess);
-        bool result = Single.TryParse (guess, out intVal);
+        bool result = Int32.TryParse (guess, out intVal);
         inputField1.text = "";
         if(result)
             {
                  intVal = Convert.ToInt32(guess);
-                 PlayerPrefs.SetFloat("FishNumber", intVal);
-                 if(dropdown.value == 1)
-                 {
-                 int NeonTetra = 2;
-                 Points = intVal * NeonTetra;
-                 Debug.Log($"You have {Points} Points");
-                 PointsSumCheck(); 
-                 }
-                 else
-                 {
-                     Debug.Log("Please select Neon Tetra");
-                 }
+                 PlayerPrefs.SetInt("FishNumber", intVal);  
+                 int sum = Fpoints * intVal;
+                 Debug.Log("You have " + sum + " Points!");
+                 PointsSumCheck(sum);
             }
             else
             {
@@ -92,9 +120,11 @@ public class Dropdown2 : MonoBehaviour
 
     }
     
-    void PointsSumCheck()
+    void PointsSumCheck(int sum)
     {
-        if(Points <= intAquarium)
+        int intAquarium = PlayerPrefs.GetInt("AquariumPoints");
+
+        if(sum <= intAquarium)
         {
             Debug.Log("Aquarium good to go!");
         }
@@ -104,16 +134,23 @@ public class Dropdown2 : MonoBehaviour
         }
     }
     
-
-public class trying : DropDownExample
+    void RetrieveValues()
     {
-         public void method1()
-         {
-             //DropDownExample DDE = new DropDownExample();
-             Debug.Log("This is ");
-             
-         }
+        int index = dropdown.value;
+        int[] intArray = new int[14]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}; // must change in future
+      
+        for(int i = 0; i < 14; i++)
+        {
+            if(index == intArray[i])
+            {
+                Debug.Log(TempResidents[i].Name + " is " + TempResidents[i].PointsValue + " points");
+                Fpoints = TempResidents[i].PointsValue;
+                // dropdown.value = dropdown.value + 1;
+                //Debug.Log(intArray[0]);
+                //Debug.Log(dropdown.options[dropdown.value].text);
+            }
+        }     
     }
-}
 
+}
 }
