@@ -153,4 +153,13 @@ public class Dropdown2 : MonoBehaviour
     }
 
 }
+
+ public static class MultiProfile 
+ {
+     private static string currentProfile = "default";
+     public static int GetInt(string key, int defaultValue) 
+     {
+         return PlayerPrefs.GetInt(currentProfile + key, defaultValue);
+     }
+ }
 }

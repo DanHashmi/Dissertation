@@ -55,19 +55,28 @@ public class DropDownExample : MonoBehaviour
     }
     public void GetInput(string guess)
     {
-        Debug.Log("You Entered " + guess);
-       
-        bool result = Int32.TryParse(guess, out litres);
-        if(result)
+        if(dropdown.value != 0)
         {
-            intValue = litres/2;
-            PlayerPrefs.SetInt("AquariumPoints", intValue);
+            Debug.Log("You Entered " + guess);
+       
+            bool result = Int32.TryParse(guess, out litres);
+            if(result)
+            {
+                intValue = litres/2;
+                PlayerPrefs.SetInt("AquariumPoints", intValue);
+            }
+            else
+            {
+                Debug.Log("Please enter interger");
+            }
+            input.text = ":)";
         }
+
         else
         {
-            Debug.Log("Please enter interger");
+            Debug.Log("Select Aquarium type first!");
         }
-        input.text = "";
+        
     }
    
 }
