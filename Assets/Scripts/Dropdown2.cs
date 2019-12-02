@@ -91,6 +91,7 @@ public class Dropdown2 : MonoBehaviour
                 int.TryParse(row[2], out temp.PointsValue);
                 temp.TrafficLightsColour = row[3];
                 temp.Skin = row[4];
+                temp.Cost = row[5];
                 dropdown.AddOptions(names);
                 TempResidents.Add(temp);
             }

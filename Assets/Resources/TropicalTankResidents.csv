@@ -1,15 +1,15 @@
-ID,Name,Points Value,Traffic Lights Colour,Skin
-1,Cherry Barb,1,Green,Sphere
-2,Golden Barb,2,Green,Sphere
-3,Amano Shrimp,1,Green,Sphere
-4,Freshwater Shrimp,0,Green,Sphere
-5,White Minnow,1,Green,Sphere
-6,Gold Minnow,1,Green,Sphere
-7,Assorted Danio,1,Green,Sphere
-8,Red Spotted Snail,0,Green,Sphere
-9,Red Lips Snail,0,Green,Sphere
-10,Spiral Horn Snail,0,Green,Sphere
-11,Sucking Loach,4,Amber,Sphere
-12,Temp Sucking Loach,4,Amber,Sphere
-13,Variatus Platy,2,Green,Sphere
-14,Black Corydoras,4,Green,Sphere
+ID,Name,Points Value,Traffic Lights Colour,Skin,Cost
+1,Cherry Barb,1,Green,Sphere,1
+2,Golden Barb,2,Green,Sphere,1
+3,Amano Shrimp,1,Green,Sphere,1
+4,Freshwater Shrimp,0,Green,Sphere,1
+5,White Minnow,1,Green,Sphere,1
+6,Gold Minnow,1,Green,Sphere,1
+7,Assorted Danio,1,Green,Sphere,1
+8,Red Spotted Snail,0,Green,Sphere,1
+9,Red Lips Snail,0,Green,Sphere,1
+10,Spiral Horn Snail,0,Green,Sphere,1
+11,Sucking Loach,4,Amber,Sphere,1
+12,Temp Sucking Loach,4,Amber,Sphere,1
+13,Variatus Platy,2,Green,Sphere,1
+14,Black Corydoras,4,Green,Sphere,1

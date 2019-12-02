@@ -9,4 +9,5 @@ public class TempFish
     public int PointsValue;
     public string TrafficLightsColour;
     public string Skin;
+    public int Cost;
 }
