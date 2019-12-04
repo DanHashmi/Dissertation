@@ -13,14 +13,16 @@ public class GlobalFlock : MonoBehaviour
 	public GameObject fishSchool;
 	public static int tankSize = 7;
 
-	static int numFish = 20;
-	//static int numFish = PlayerPrefs.GetInt("FishNumber");
-	public static GameObject[] allFish = new GameObject[numFish];
+	//static int numFish = 20;
+	static int numFish;
+	public static GameObject[] allFish;
 	public static Vector3 goalPos = Vector3.zero;
 
 	// Use this for initialization
 	void Start () 
 	{
+		numFish = PlayerPrefs.GetInt("FishNumber");
+		allFish = new GameObject[numFish];
 		RenderSettings.fogDensity = 0.03F;
 		RenderSettings.fog = true;
 		RenderSettings.fogColor = Camera.main.backgroundColor;

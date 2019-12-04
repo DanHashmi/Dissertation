@@ -11,6 +11,7 @@ public class LoadScene : MonoBehaviour
     public Dropdown dropdown;
     [SerializeField]
     private InputField input;
+
    
     public void SceneLoader(int SceneIndex)
     {
@@ -31,6 +32,17 @@ public class LoadScene : MonoBehaviour
             }
         }
     }
-  
+    public void FinalSceneLoader(int Sceneindex2)
+    {
+        if(PlayerPrefs.GetInt("SumCheck")==1)
+        {
+            SceneManager.LoadScene(Sceneindex2);
+        }
+
+        else 
+        {
+            Debug.Log("Aquarium Overcrowded! Please change number of Fish!");
+        }
+    }    
 }
 }

@@ -24,9 +24,11 @@ public class Dropdown2 : MonoBehaviour
 
     private int intVal;
     private int Fpoints;
-    
+    private string Trafficlights;
+    private int NumRows;
+    private int[] intArray1;
     private bool result;
-    //public string guess;
+    //public string numberOfFish;
     //public float Points;
 
     public void DropDown_IndexChanged(int index)
@@ -35,8 +37,8 @@ public class Dropdown2 : MonoBehaviour
 
         if(index == 0)
         {
-            SelectedName.color = Color.red;
-            RetrieveValues();
+            SelectedName.color = Color.red;    
+            //RetrieveValues();
         }
 
         else 
@@ -78,7 +80,7 @@ public class Dropdown2 : MonoBehaviour
      
     void PopulateList(string[] data)
     {
-        for(int i = 1; i < data.Length - 1; i++)
+        for(int i = 0; i < data.Length - 1; i++)
         {
             string[] row = data[i].Split(new char[] {','});
             
@@ -91,34 +93,47 @@ public class Dropdown2 : MonoBehaviour
                 int.TryParse(row[2], out temp.PointsValue);
                 temp.TrafficLightsColour = row[3];
                 temp.Skin = row[4];
-                temp.Cost = row[5];
+                int.TryParse(row[5], out temp.Cost);
                 dropdown.AddOptions(names);
                 TempResidents.Add(temp);
+                intArray1 = new int[data.Length - 1];
+                for (var j = 0; j < intArray1.Length; j += 1)
+                {
+                    intArray1[j] = j; // must change in future
+                }
+                //NumRows = lines.Length;
+                //intArray = 
             }
             
         }
         
     }
 
-    public void GetInput(string guess)
+    public void GetInput(string numberOfFish)
     {
-        //Debug.Log("You Entered " + guess);
-        //intVal = Convert.ToInt32(guess);
-        bool result = Int32.TryParse (guess, out intVal);
-        inputField1.text = "";
-        if(result)
+        if(dropdown.value != 0)
+        {
+            bool result = Int32.TryParse (numberOfFish, out intVal);
+            inputField1.text = "";
+            if(result)
             {
-                 intVal = Convert.ToInt32(guess);
-                 PlayerPrefs.SetInt("FishNumber", intVal);  
-                 int sum = Fpoints * intVal;
-                 Debug.Log("You have " + sum + " Points!");
-                 PointsSumCheck(sum);
+                intVal = Convert.ToInt32(numberOfFish);
+                PlayerPrefs.SetInt("FishNumber", intVal);   // create array of prefs?
+                int sum = Fpoints * intVal;
+                Debug.Log("You have " + sum + " Points! Traffic Lights Colour = " + Trafficlights);
+                PointsSumCheck(sum);
             }
             else
             {
                 Debug.Log("Please enter interger ;(");    
             }
-
+        }
+        
+        else
+        {
+            Debug.Log("Please Select a fish species!");
+        }
+        
     }
     
     void PointsSumCheck(int sum)
@@ -128,6 +143,8 @@ public class Dropdown2 : MonoBehaviour
         if(sum <= intAquarium)
         {
             Debug.Log("Aquarium good to go!");
+            var checking = true;
+            PlayerPrefs.SetInt("SumCheck", checking?1:0);
         }
         else
         {
@@ -138,14 +155,14 @@ public class Dropdown2 : MonoBehaviour
     void RetrieveValues()
     {
         int index = dropdown.value;
-        int[] intArray = new int[14]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}; // must change in future
-      
-        for(int i = 0; i < 14; i++)
+
+        for(int i = 1; i < intArray1.Length; i++)
         {
-            if(index == intArray[i])
+            if(index == intArray1[i])
             {
                 Debug.Log(TempResidents[i].Name + " is " + TempResidents[i].PointsValue + " points");
                 Fpoints = TempResidents[i].PointsValue;
+                Trafficlights = TempResidents[i].TrafficLightsColour;
                 // dropdown.value = dropdown.value + 1;
                 //Debug.Log(intArray[0]);
                 //Debug.Log(dropdown.options[dropdown.value].text);

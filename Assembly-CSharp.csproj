@@ -94,6 +94,7 @@
      <Compile Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
      <Compile Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
      <Compile Include="Assets\Scripts\Aquarium.cs" />
+     <Compile Include="Assets\Scripts\DragBox.cs" />
      <Compile Include="Assets\Scripts\Dropdown2.cs" />
      <Compile Include="Assets\Scripts\DropDownExample.cs" />
      <Compile Include="Assets\Scripts\DropdownFilter.cs" />
@@ -101,6 +102,8 @@
      <Compile Include="Assets\Scripts\GlobalFlock.cs" />
      <Compile Include="Assets\Scripts\LoadData.cs" />
      <Compile Include="Assets\Scripts\LoadScene.cs" />
+     <Compile Include="Assets\Scripts\MessageBox.cs" />
+     <Compile Include="Assets\Scripts\MessageFunction.cs" />
      <Compile Include="Assets\Scripts\Program.cs" />
      <Compile Include="Assets\Scripts\TankResidents.cs" />
      <Compile Include="Assets\Scripts\TempFish.cs" />

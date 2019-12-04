@@ -53,23 +53,23 @@ public class DropDownExample : MonoBehaviour
         
         dropdown.AddOptions(names);
     }
-    public void GetInput(string guess)
+    public void GetInput(string capacity)
     {
         if(dropdown.value != 0)
         {
-            Debug.Log("You Entered " + guess);
-       
-            bool result = Int32.TryParse(guess, out litres);
+            bool result = Int32.TryParse(capacity, out litres);
             if(result)
             {
                 intValue = litres/2;
-                PlayerPrefs.SetInt("AquariumPoints", intValue);
+                PlayerPrefs.SetInt("AquariumPoints", intValue); // must be a float
+                input.text = ":)";
+                Debug.Log("You Entered " + capacity + " litres");
             }
             else
             {
-                Debug.Log("Please enter interger");
+                Debug.Log("Please enter a real number");
+                input.text = "";
             }
-            input.text = ":)";
         }
 
         else
