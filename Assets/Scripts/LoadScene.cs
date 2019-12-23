@@ -20,11 +20,14 @@ public class LoadScene : MonoBehaviour
 
     public void ConditionalSceneLoader(int sceneindex)
     {
-        if(dropdown.value == 0 || input.text != ":)")
+        if(dropdown.value == 0)
         {
             Debug.Log("Please select aquarium!");
         }
-
+        else if(input.text != ":)")
+        {
+            Debug.Log("Plese enter aquarium capacity!");
+        }
         else
         {
             {
@@ -39,7 +42,7 @@ public class LoadScene : MonoBehaviour
             SceneManager.LoadScene(Sceneindex2);
         }
 
-        else 
+        else
         {
             Debug.Log("Aquarium Overcrowded! Please change number of Fish!");
         }
