@@ -12,10 +12,10 @@ public class LoadScene : MonoBehaviour
     [SerializeField]
     private InputField input;
 
-   
     public void SceneLoader(int SceneIndex)
     {
         SceneManager.LoadScene(SceneIndex);
+        System.IO.File.WriteAllText(@"Assets\Scripts\CSVTextFile.txt", string.Empty);
     }
 
     public void ConditionalSceneLoader(int sceneindex)
@@ -40,6 +40,7 @@ public class LoadScene : MonoBehaviour
         if(PlayerPrefs.GetInt("SumCheck")==1)
         {
             SceneManager.LoadScene(Sceneindex2);
+            System.IO.File.WriteAllText(@"Assets\Scripts\CSVTextFile.txt", string.Empty);
         }
 
         else

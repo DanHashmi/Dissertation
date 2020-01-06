@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using System.Text;
 
 namespace fishtanksoftware
 {
@@ -13,46 +18,58 @@ public class Dropdown2 : MonoBehaviour
     public TextAsset TemperateTankResidents;
     public TextAsset TropicalTankResidents;
     public TextAsset ColdwaterTankResidents;
+    public TextAsset CSVText;
     List<TempFish> TempResidents = new List<TempFish>();
-    List<Dropdown.OptionData> Option = new List<Dropdown.OptionData>();
+    List<TempFish> TempResidents2 = new List<TempFish>();
 
     public Dropdown dropdown;
     public Dropdown dropdown1;
+    private List<Dropdown.OptionData> dropdownOptions;
     public Text SelectedName;
     public InputField EraseField;
     public Text inputFieldText;
-    public Transform DropdownTest;
+
+    // [SerializeField]
+    // private InputField inputField1;
+
+    // [SerializeField]
+    // private AutoCompleteComboBox combobox;
 
     [SerializeField]
-    private InputField inputField1;
+    private DropDownListItem combobox;
 
-    private int intVal;
     private int intVall;
     private int Fpoints;
+    private string Fname;
+    private int testpoints;
     private string Trafficlights;
-    private int NumRows;
+    private string addtofile;
     private int[] intArray1;
+    private int[] TestArray;
+    private int[] sumArray;
+    private int[] TrueNumber;
+    private string[] csvdata;
     private bool result;
     private int index1;
+    private int sum1;
+    private int j;
+    private int truenumber;
+    private string filepath = @"Assets\Scripts\CSVTextFile.txt";
 
     public void DropDown_IndexChanged(int index)
     {
         SelectedName.text = TempResidents[index].Name;
-        if(index == 0)
+        if(intArray1[index] == 0)
         {
             SelectedName.color = Color.red;    
-            //RetrieveValues();
         }
-
         else 
         {
             SelectedName.color = Color.white;
             RetrieveValues();
-            
         }
     }
 
-    
     void Start()
     {
         string aq = PlayerPrefs.GetString("AquariumType");
@@ -79,11 +96,16 @@ public class Dropdown2 : MonoBehaviour
         {
             Debug.Log("Please select Aquarium!"); // need to work around go button
         }
+
+        UpdateInspector();
+        Debug.Log(intArray1[7]);
     }
      
     void PopulateList(string[] data)
     {
-        for(int i = 0; i < data.Length - 1; i++)
+        intArray1 = new int[data.Length - 1];
+
+        for(int i = 0; i < intArray1.Length; i++)
         {
             string[] row = data[i].Split(new char[] {','});
             
@@ -99,89 +121,68 @@ public class Dropdown2 : MonoBehaviour
                 int.TryParse(row[5], out temp.Cost);
                 dropdown.AddOptions(names);
                 TempResidents.Add(temp);
-                intArray1 = new int[data.Length - 1];
-                for (var j = 0; j < intArray1.Length; j += 1)
-                {
-                    intArray1[j] = j; // must change in future
-                }
-            }
-            
-        }
-        
-    }
-
-    public void GetInput(string numberOfFish)
-    {
-        if(dropdown.value != 0)
-        {
-            bool result = Int32.TryParse (numberOfFish, out intVal);
-            inputField1.text = "";
-            if(result)
-            {
-                intVal = Convert.ToInt32(numberOfFish);
-                PlayerPrefs.SetInt("FishNumber", intVal);   // create array of prefs?
-                int sum = Fpoints * intVal;
-                Debug.Log("You have " + sum + " Points! Traffic Lights Colour = " + Trafficlights);
-                PointsSumCheck(sum);
-            }
-            else
-            {
-                Debug.Log("Please enter interger ;(");    
+                // intArray1 = new int[data.Length - 1];
+                // for (j = 0; j < intArray1.Length; j += 1)
+                // {
+                //     intArray1[j] = j; 
+                // }
+                intArray1[i] = i;
             }
         }
-        
-        else
-        {
-            Debug.Log("Please Select a fish species!");
-        }
-        
     }
     
     public void AddIt()
     {
-        if(inputFieldText.text != "")
+        if(dropdown.value != 0)
         {
-            if(dropdown.value != 0)
+            if(inputFieldText.text != "")
             {
-                dropdown1.options.Add(new Dropdown.OptionData(){text = inputFieldText.text + " " + dropdown.options[dropdown.value].text});
+                addtofile = dropdown.options[dropdown.value].text;
+                dropdown1.options.Add(new Dropdown.OptionData(){text = inputFieldText.text + " " + addtofile + ":" + Trafficlights});
                 intVall = Convert.ToInt32(inputFieldText.text);
-                int sum = Fpoints * intVall;
-                Debug.Log(sum + " Points! Traffic Lights Colour = " + Trafficlights);
-                PointsSumCheck(sum);
+                sum1 = Fpoints * intVall;
+                Debug.Log("In total, " + Fname + " is " + sum1 + " points! Traffic Lights Colour = " + Trafficlights);
                 EraseField.text = "";
                 dropdown1.RefreshShownValue();
+                AddCSV(addtofile, sum1, Trafficlights, intVall, filepath);
+                UpdateInspector();
+                // var lineCount = File.ReadLines(filepath).Count();               
+                // Debug.Log(lineCount);
             }
             else
             {
-                Debug.Log("Please select Fish Species");
+                Debug.Log("Please enter a number");
             }
         }
         else
         {
-            Debug.Log("Please enter a number");
+            Debug.Log("Please select Fish Species");
         }
     }
 
     public void setIndex(int varIndex)
     {
-        // if(index1 != Option.Count)
-        // {
-            this.index1 = varIndex;
-        // }
-        // else
-        // {
-        //     Debug.Log("Select Dropdown Value");
-        // }
+        this.index1 = varIndex; 
     }
 
     public void DeleteIt()
     {
-        if(DropdownTest.childCount != 0)
+        List<Dropdown.OptionData> list = dropdown1.options;
+        if(list.Count != 0)
         {
-            string Deleted = dropdown1.options[index1].text;
-            dropdown1.options.RemoveAt(index1); // have to selcect which one to delete
-            Debug.Log("Removed " + Deleted);
-            dropdown1.RefreshShownValue();
+            if(index1 < list.Count)
+            {
+                string Deleted = dropdown1.options[index1].text;
+                dropdown1.options.RemoveAt(index1); 
+                Debug.Log("Removed " + Deleted);
+                dropdown1.RefreshShownValue();
+                DeleteLine(index1);
+                UpdateInspector();
+            }
+            else if(index1 >= list.Count)
+            {
+                Debug.Log("Please chose which fish to delete"); // have to selcect which one to delete
+            }
         }
         else
         {
@@ -191,20 +192,45 @@ public class Dropdown2 : MonoBehaviour
 
     public void CheckIt()
     {
-        int z = dropdown1.value;
-        List<Dropdown.OptionData> list = dropdown1.options;
-        for(int i = 0; i < list.Count; i++)
-        {
-            int sum = Fpoints * intVall;
-            Debug.Log(sum);
-        }
+        csvdata = CSVText.text.Split(new char[] {'\n'} );
+        PopulateSecond(csvdata);
+    }
+
+    void UpdateInspector()
+    {
+        AssetDatabase.ImportAsset(filepath);
     }
 
     public void ClearIt()
     {
         dropdown1.ClearOptions();
+        System.IO.File.WriteAllText(filepath,string.Empty);
+        UpdateInspector();
     }
 
+    void OnApplicationQuit()
+    {
+        System.IO.File.WriteAllText(filepath,string.Empty);
+        UpdateInspector();
+    }
+
+    void AddCSV(string Name, int PointsValue, string TrafficLightsColour, int Number, string filepath)
+    {
+       try
+       {
+           using (System.IO.StreamWriter file = new System.IO.StreamWriter(@filepath, true))
+           {
+               file.WriteLine(Name + "," + PointsValue + "," + TrafficLightsColour + "," + Number);
+               file.Close(); //not needed
+           }
+       }
+       catch (Exception ex)
+       {
+           
+           throw new ApplicationException("Error :", ex);
+       }
+    }
+    
     void PointsSumCheck(int sum)
     {
         int intAquarium = PlayerPrefs.GetInt("AquariumPoints");
@@ -219,7 +245,7 @@ public class Dropdown2 : MonoBehaviour
         {
             int checking = 0;
             PlayerPrefs.SetInt("SumCheck", checking);
-            Debug.Log("Aquarium Overcrowded");
+            Debug.Log("Aquarium Overcrowded - Please change fish or aquarium selection");
         }
     }
     
@@ -231,22 +257,52 @@ public class Dropdown2 : MonoBehaviour
         {
             if(index == intArray1[i])
             {
-                Debug.Log(TempResidents[i].Name + " is " + TempResidents[i].PointsValue + " points");
                 Fpoints = TempResidents[i].PointsValue;
+                Fname = TempResidents[i].Name;
+                Debug.Log(Fname + " is " + Fpoints + " points");
                 Trafficlights = TempResidents[i].TrafficLightsColour;
-                //Debug.Log(dropdown.options[dropdown.value].text);
             }
         }     
     }
+     void PopulateSecond(string[] data)
+    {
+        int sum = 0;
+        int sum1 = 0;
+        for(int i = 0; i < data.Length - 1; i++)
+        {
+            string[] row = data[i].Split(new char[] {','});
+            
+            if (row [0] != "") // Check if row is empty
+            {
+                TempFish temp = new TempFish();
+                temp.Name = row[0];
+                int.TryParse(row[1], out temp.PointsValue);
+                List<int> sumvalues = new List<int>(){temp.PointsValue};
+                temp.TrafficLightsColour = row[2];
+                if(temp.TrafficLightsColour[i] == 'A')
+                {
+                    Debug.Log("Some fish need consideration");
+                }
+                int.TryParse(row[3], out temp.FishNumber);
+                TempResidents2.Add(temp);
+                TestArray = new int[data.Length - 1];
+                sumArray = new int[data.Length - 1];
+                TestArray[i] = temp.PointsValue;
+                sum += TestArray[i];
+                sumArray[i] = temp.FishNumber;
+                sum1 += sumArray[i];
+            }
+        }
+        Debug.Log("Overall fish points total is " + sum);
+        PointsSumCheck(sum);
+        PlayerPrefs.SetInt("FishNumber", sum1);
+    }
 
+    void DeleteLine(int number)
+    {
+        var file = new List<string>(System.IO.File.ReadAllLines(filepath));
+        file.RemoveAt(number);
+        File.WriteAllLines(filepath, file.ToArray());
+    }
 }
-
- public static class MultiProfile 
- {
-     private static string currentProfile = "default";
-     public static int GetInt(string key, int defaultValue) 
-     {
-         return PlayerPrefs.GetInt(currentProfile + key, defaultValue);
-     }
- }
 }

@@ -14,10 +14,7 @@ public class DropDownExample : MonoBehaviour
     public Text SelectedName;
     private int intValue;
     private int litres;
-    // public static int test = 10;
     private string AqType;
-    
-    
 
     [SerializeField]
     private InputField input;
@@ -36,11 +33,9 @@ public class DropDownExample : MonoBehaviour
             SelectedName.color = Color.white;
             AqType = dropdown.options[dropdown.value].text;
             PlayerPrefs.SetString("AquariumType", AqType);
-           // Debug.Log("this is " + intValue);
         }
     }
 
-    
     void Start()
     {
         PopulateList();
@@ -48,9 +43,6 @@ public class DropDownExample : MonoBehaviour
      
     void PopulateList()
     {
-        // public string path = @"C:\Users\hashm\Downloads\newfishtank\Fish\Assets\Sardine\Scripts";
-        // Get list from file
-        
         dropdown.AddOptions(names);
     }
     public void GetInput(string capacity)
@@ -78,6 +70,5 @@ public class DropDownExample : MonoBehaviour
         }
         
     }
-   
 }
 }

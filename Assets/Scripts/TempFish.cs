@@ -10,4 +10,5 @@ public class TempFish
     public string TrafficLightsColour;
     public string Skin;
     public int Cost;
+    public int FishNumber;
 }

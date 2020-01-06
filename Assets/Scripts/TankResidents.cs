@@ -1,6 +1,6 @@
 namespace test
 {
-    public class TemperateTankResidents : Aquariums
+    public class TemperateTankResidents 
     {
         public static int TempRosyBarb = 3;
         //amber traffic light
@@ -31,7 +31,7 @@ namespace test
         public static int BlackCorydoras = 4;
         //green traffic light
     }
-    public class TropicalTankResidents : Aquariums
+    public class TropicalTankResidents 
     {
         public static int AlbinoTigerBarbLarge = 3;
         //amber traffic light
@@ -194,7 +194,7 @@ namespace test
         public static int RubberNosePlec = 4;
         //amber traffic light
     }
-    public class ColdwaterTankResidents : Aquariums
+    public class ColdwaterTankResidents
     {
         public static int BlackMoor = 10;
         //green traffic light
