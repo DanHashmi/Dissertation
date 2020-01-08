@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-// using System;
 
 public class DropdownFilter : MonoBehaviour
 {
@@ -13,13 +12,12 @@ public class DropdownFilter : MonoBehaviour
     private Dropdown dropdown;
      
     private List<Dropdown.OptionData> dropdownOptions;
-    //string dropdownOptions = ("Option A", "Option B", "Option C");
      
     void Start()
     {
         dropdownOptions = dropdown.options;
     }    
-    public void FilterDropdown( string input )
+    public void FilterDropdown( string input ) //issue where dropdown isnt selected
     {
         dropdown.options = dropdownOptions.FindAll( option => option.text.IndexOf( input ) >= 0 );
         //  DropdownFilter.dropdown == 0;
