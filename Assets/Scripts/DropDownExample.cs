@@ -12,8 +12,10 @@ public class DropDownExample : MonoBehaviour
     List<string> names = new List<string>() {"Please Select Aquarium","Coldwater", "Temperate", "Tropical"};
     public Dropdown dropdown;
     public Text SelectedName;
-    private int intValue;
-    private int litres;
+    public Text Error;
+    public Text Console;
+    private float floatValue;
+    private float litres;
     private string AqType;
 
     [SerializeField]
@@ -49,24 +51,24 @@ public class DropDownExample : MonoBehaviour
     {
         if(dropdown.value != 0)
         {
-            bool result = Int32.TryParse(capacity, out litres);
+            bool result = Single.TryParse(capacity, out litres);
             if(result)
             {
-                intValue = litres/2;
-                PlayerPrefs.SetInt("AquariumPoints", intValue); // must be a float
+                floatValue = litres/2;
+                PlayerPrefs.SetFloat("AquariumPoints", floatValue); // must be a float
                 input.text = ":)";
-                Debug.Log("You Entered " + capacity + " litres");
+                Console.text = ("You Entered " + capacity + " litres");
             }
             else
             {
-                Debug.Log("Please enter a real number");
+                Error.text = ("Please enter a real number");
                 input.text = "";
             }
         }
 
         else
         {
-            Debug.Log("Select Aquarium type first!");
+            Error.text = ("Select Aquarium type first!");
         }
         
     }

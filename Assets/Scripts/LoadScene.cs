@@ -37,7 +37,7 @@ public class LoadScene : MonoBehaviour
     }
     public void FinalSceneLoader(int Sceneindex2)
     {
-        if(PlayerPrefs.GetInt("SumCheck")==1)
+        if(PlayerPrefs.GetInt("SumCheck")==1 && PlayerPrefs.GetInt("CompatCheck")==1)
         {
             SceneManager.LoadScene(Sceneindex2);
             System.IO.File.WriteAllText(@"Assets\Scripts\CSVTextFile.txt", string.Empty);

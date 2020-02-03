@@ -11,7 +11,6 @@ using System.Text;
 
 namespace fishtanksoftware
 {
-
 public class Dropdown2 : MonoBehaviour
 {
     public TextAsset TemperateTankResidents;
@@ -27,6 +26,10 @@ public class Dropdown2 : MonoBehaviour
     public Text SelectedName;
     public InputField EraseField;
     public Text inputFieldText;
+    public Text console;
+    public Text error;
+    public Text nameinfo;
+    public Text colourinfo;
     [SerializeField]
     private InputField TopInputField;
 
@@ -34,8 +37,8 @@ public class Dropdown2 : MonoBehaviour
     private int Fpoints;
     private string Fname;
     private string Trafficlights;
-    private string addtofile;
     private string AddWithColour;
+    private string StartString;
     private string fishselection;
     private int[] intArray1;
     private int[] TestArray;
@@ -88,10 +91,6 @@ public class Dropdown2 : MonoBehaviour
             PopulateList(colddata);
         }
 
-        else
-        {
-            Debug.Log("Please select Aquarium!"); // need to work around go button
-        }
         ResizeMenus();
         UpdateInspector();
     }
@@ -121,22 +120,45 @@ public class Dropdown2 : MonoBehaviour
         }
     }
     
+    public void Test()
+    {
+        int check = PlayerPrefs.GetInt("FilterCheck");
+        if(check == 1)
+        {
+            Debug.Log("yes-empty");
+        }
+        else
+        {
+            Debug.Log("not empty");
+        }
+    }
     public void AddIt()
     {
+        int check = PlayerPrefs.GetInt("FilterCheck");
+        if(check == 0)
+        {
+            Test1();
+        }
+        else
+        {
+            error.text = ("Please select Fish Species");
+        }
+        
+    }
+    void Test1()
+    {
+        string addtofile = dropdown.options[dropdown.value].text;
         if(fishselection != "Select Species" && filterindex != 0)
         {
             if(inputFieldText.text != "")
             {
-                addtofile = dropdown.options[dropdown.value].text;
-
-                if(addtofile == fishselection)
+                if(addtofile == fishselection) //issue if autocomplete is nonsense
                 {
                     ColourCheck(addtofile);
                     dropdown1.options.Add(new Dropdown.OptionData(){text = inputFieldText.text + " " + AddWithColour});
-                    // Test();
                     intVal = Convert.ToInt32(inputFieldText.text);
                     sum1 = Fpoints * intVal;
-                    Debug.Log("In total, " + Fname + " is " + sum1 + " points! Traffic Lights Colour = " + Trafficlights);
+                    console.text = ("In total, " + Fname + " is " + sum1 + " points! Traffic Lights Colour = " + Trafficlights);
                     EraseField.text = "";
                     dropdown1.RefreshShownValue();
                     AddCSV(addtofile, sum1, Trafficlights, intVal, filepath);
@@ -144,17 +166,17 @@ public class Dropdown2 : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Please select another fish first then come back to your selection"); //temporary solution
+                    error.text = ("Please select another fish first then come back to your selection"); //temporary solution
                 }
             }
             else
             {
-                Debug.Log("Please enter a number");
+                error.text = ("Please enter a number");
             }
         }
         else
         {
-            Debug.Log("Please select Fish Species");
+            error.text = ("Please select Fish Species");
         }
     }
 
@@ -185,19 +207,19 @@ public class Dropdown2 : MonoBehaviour
             {
                 string Deleted = dropdown1.options[index1].text;
                 dropdown1.options.RemoveAt(index1); 
-                Debug.Log("Removed " + Deleted);
+                console.text = ("Removed " + Deleted);
                 dropdown1.RefreshShownValue();
                 DeleteLine(index1);
                 UpdateInspector();
             }
             else if(index1 >= list.Count)
             {
-                Debug.Log("Please chose which fish to delete"); // have to select which one to delete
+                error.text = ("Please chose which fish to delete"); // have to select which one to delete
             }
         }
         else
         {
-            Debug.Log("List is Empty");
+            error.text = ("List is Empty");
         } 
     }
 
@@ -223,6 +245,7 @@ public class Dropdown2 : MonoBehaviour
     {
         System.IO.File.WriteAllText(filepath,string.Empty);
         UpdateInspector();
+        PlayerPrefs.SetInt("FilterCheck", 0);
     }
 
     void AddCSV(string Name, int PointsValue, string TrafficLightsColour, int Number, string filepath)
@@ -244,19 +267,20 @@ public class Dropdown2 : MonoBehaviour
     
     void PointsSumCheck(int sum)
     {
-        int intAquarium = PlayerPrefs.GetInt("AquariumPoints");
+        float intAquarium = PlayerPrefs.GetFloat("AquariumPoints");
 
         if(sum <= intAquarium)
         {
-            Debug.Log("Aquarium good to go!");
+            console.text = ("Aquarium good to go!");
             int checking = 1;
             PlayerPrefs.SetInt("SumCheck", checking);
+            FishCompatibility(StartString);
         }
         else
         {
             int checking = 0;
             PlayerPrefs.SetInt("SumCheck", checking);
-            Debug.Log("Aquarium Overcrowded - Please change fish or aquarium selection");
+            console.text = ("Aquarium Overcrowded : Points = " + sum + ". Please change fish or aquarium selection");
         }
     }
     
@@ -269,7 +293,7 @@ public class Dropdown2 : MonoBehaviour
                 filterindex = intArray1[i];
                 Fpoints = TempResidents[i].PointsValue;
                 Fname = TempResidents[i].Name;
-                Debug.Log(Fname + " is " + Fpoints + " points");
+                nameinfo.text = (Fname + " is " + Fpoints + " points");
                 Trafficlights = TempResidents[i].TrafficLightsColour;
             }
         }    
@@ -279,7 +303,7 @@ public class Dropdown2 : MonoBehaviour
     {
         int sum = 0;
         int sum1 = 0;
-        string start = "";
+        StartString = "";
 
         for(int i = 0; i < data.Length - 1; i++)
         {
@@ -302,12 +326,11 @@ public class Dropdown2 : MonoBehaviour
                 sumArray[i] = temp.FishNumber;
                 sum1 += sumArray[i];
                 ColourArray[i] = temp.TrafficLightsColour;
-                start += ColourArray[i] + " ";
+                StartString += ColourArray[i] + " ";
             }
         }
-        Debug.Log("Overall fish points total is " + sum);
+        console.text = ("Overall fish points total is " + sum);
         PointsSumCheck(sum);
-        FishCompatibility(start);
         PlayerPrefs.SetInt("FishNumber", sum1);
     }
 
@@ -324,15 +347,17 @@ public class Dropdown2 : MonoBehaviour
         bool AmberCheck = text.Contains("Amber");
         if(RedCheck == false && AmberCheck == false)
         {
-            Debug.Log("Fish Compatible!");
+            colourinfo.text = ("Fish Compatible!");
+            int checking = 1;
+            PlayerPrefs.SetInt("CompatCheck", checking);
         }
         else if(RedCheck == true)
         {
-            Debug.Log("Some fish need serious consideration");
+            colourinfo.text = ("Some fish need serious consideration");
         }
         else if(AmberCheck == true)
         {
-            Debug.Log("Some fish need consideration");
+            colourinfo.text = ("Some fish need consideration");
         }
     }
     void ResizeMenus()
@@ -348,4 +373,3 @@ public class Dropdown2 : MonoBehaviour
     } 
 }
 }
-// var lineCount = File.ReadLines(filepath).Count();  
