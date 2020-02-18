@@ -101,7 +101,6 @@
      <Compile Include="Assets\Scripts\Fish.cs" />
      <Compile Include="Assets\Scripts\GlobalFlock.cs" />
      <Compile Include="Assets\Scripts\LoadScene.cs" />
-     <Compile Include="Assets\Scripts\please.cs" />
      <Compile Include="Assets\Scripts\TankResidents.cs" />
      <Compile Include="Assets\Scripts\TempFish.cs" />
      <Compile Include="Assets\Scripts\test2.cs" />
@@ -320,7 +319,6 @@
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\unity-ui-extensions\Shaders\UILinearDodge.shader" />
-     <None Include="Assets\Scripts\t.txt" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
      <None Include="Assets\unity-ui-extensions\Shaders\UI Particle VertexLit Blended.shader" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
@@ -338,7 +336,6 @@
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
-     <None Include="Assets\Scripts\test.txt" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />

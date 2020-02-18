@@ -11,4 +11,5 @@ public class TempFish
     public string Skin;
     public int Cost;
     public int FishNumber;
+    public int IndPointsValue;
 }
