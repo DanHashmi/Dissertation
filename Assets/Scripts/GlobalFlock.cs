@@ -7,13 +7,10 @@ namespace fishtanksoftware
 	
 public class GlobalFlock : MonoBehaviour 
 {
-    //Please please = new Please();
 	public GameObject defaultFish;
 	public GameObject[] fishPrefabs;
 	public GameObject fishSchool;
 	public static int tankSize = 7;
-
-	//static int numFish = 20;
 	static int numFish;
 	public static GameObject[] allFish;
 	public static Vector3 goalPos = Vector3.zero;
@@ -26,8 +23,6 @@ public class GlobalFlock : MonoBehaviour
 		RenderSettings.fogDensity = 0.03F;
 		RenderSettings.fog = true;
 		RenderSettings.fogColor = Camera.main.backgroundColor;
-		// int nombre = please.Nfish();
-		// AllFish = please.mad();
 		for (int i = 0; i < numFish; i++) 
 		{
 			Vector3 pos = new Vector3 (

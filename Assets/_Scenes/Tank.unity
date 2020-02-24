@@ -5542,9 +5542,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7122a4edda0aa49e6b6046ff5f64c235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultFish: {fileID: 179140, guid: 0e13e5de9af0a40ed9dc1f41067c5c44, type: 3}
+  defaultFish: {fileID: 100014, guid: 1afcf7d7abc5e12489297243fe3a467d, type: 3}
   fishPrefabs:
-  - {fileID: 179140, guid: 0e13e5de9af0a40ed9dc1f41067c5c44, type: 3}
+  - {fileID: 100012, guid: 71e14d95280b75c4f8d4964ad62af21d, type: 3}
   fishSchool: {fileID: 363784303}
 --- !u!4 &1291967802
 Transform:

@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
 using System;
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using System.Text;
 using System.Text.RegularExpressions;
-
 
 namespace fishtanksoftware
 {
@@ -21,10 +19,8 @@ public class Dropdown2 : MonoBehaviour
     public TextAsset CSVText;
     List<TempFish> TempResidents = new List<TempFish>();
     List<TempFish> TempResidents2 = new List<TempFish>();
-
     public Dropdown dropdown;
     public Dropdown dropdown1;
-    private List<Dropdown.OptionData> dropdownOptions;
     public Text SelectedName;
     public InputField EraseField;
     public Text inputFieldText;
@@ -48,20 +44,16 @@ public class Dropdown2 : MonoBehaviour
     private int[] testsum;
     private string[] ColourArray;
     private string[] csvdata;
-    private int index;
     private int index1;
     private int sum1;
-    private int incrementedNo;
     private int filterindex;
-    int counter;
-    private int IncrementTally = 0;
+    private int newsum;
     private string filepath = @"Assets\Scripts\CSVTextFile.txt";
     public float maxWidth = 250f;
 
     public void DropDown_IndexChanged(int varIndex) //no need for varIndex
     {
-        this.index = varIndex;
-        fishselection = dropdown.options[index].text;
+        fishselection = dropdown.options[varIndex].text;
         SelectedName.text = fishselection;
 
         if(fishselection == "Select Species")
@@ -126,64 +118,63 @@ public class Dropdown2 : MonoBehaviour
         }
     }
     
-    public void Increment()
+    public void Increment() // method to increment selected option 
     {
-       List<Dropdown.OptionData> list = dropdown1.options;
-       if(list.Count != 0)
-       {
-            string selectedOption = dropdown1.options[index1].text;
-            string NumberString = Regex.Match(selectedOption, @"\d+").Value;
-            string NoNumberString = Regex.Replace(selectedOption, @"[\d-]", string.Empty);
-            int resultNo = Int32.Parse(NumberString);
-            incrementedNo = resultNo + 1; 
-            dropdown1.options.RemoveAt(index1);
-            dropdown1.options.Add(new Dropdown.OptionData(){text = incrementedNo + " " + NoNumberString});
-            dropdown1.RefreshShownValue();
-            // Debug.Log(NumberString);
-            // Debug.Log(incrementedNo);
-            Test2(NumberString, incrementedNo);  
-       }
-       else
-       {
-           error.text = ("List is Empty");
-       }
+        bool check = true;
+        ChangeValue(check);
     }
 
-    public void Decrement()
+    public void Decrement() // method to decrement selected option
     {
-       List<Dropdown.OptionData> list = dropdown1.options;
-       if(list.Count != 0)
-       {
-           if(index1 < list.Count)
+        bool check = false;
+        ChangeValue(check);
+    }
+    void ChangeValue(bool check) // change dropdown option which has been incremented/decremented
+    {
+        if(dropdown1.options.Count != 0) // check if dropdown is empty
+        {
+            if (index1 < dropdown1.options.Count) // check index not out of range
             {
                 string selectedOption = dropdown1.options[index1].text;
                 string NumberString = Regex.Match(selectedOption, @"\d+").Value;
                 string NoNumberString = Regex.Replace(selectedOption, @"[\d-]", string.Empty);
                 int resultNo = Int32.Parse(NumberString);
-                int decrementedNo = resultNo - 1;
-                Debug.Log(decrementedNo);
-                dropdown1.options.RemoveAt(index1);
-                dropdown1.options.Add(new Dropdown.OptionData(){text = decrementedNo + " " + NoNumberString});
-                dropdown1.RefreshShownValue();
-                IncrementTally--;
-                Debug.Log("tally = " + IncrementTally);
+                if(check == true)
+                {
+                    int incrementedNo = resultNo + 1;
+                    AddNewItem(incrementedNo, NoNumberString);
+                    ChangeBackend(NumberString, incrementedNo, check);
+                }
+                else
+                {
+                    int decrementedNo = resultNo - 1;
+                    AddNewItem(decrementedNo, NoNumberString);
+                    ChangeBackend(NumberString, decrementedNo, check);
+                }
             }
-            else if(index1 >= list.Count)
+            else
             {
-                error.text = ("Please chose which fish to increment"); // have to select which one
+                error.text = ("Please select fish from dropdown menu");
             }
-       }
-       else
-       {
+        }
+        else
+        {
            error.text = ("List is Empty");
-       }
+        }
     }
-    public void AddIt()
+    void AddNewItem(int change, string OnlyCharacters) //adds new item to menu
+    {
+        Dropdown.OptionData newItem = new Dropdown.OptionData(change + OnlyCharacters);
+        dropdown1.options.RemoveAt(index1);
+        dropdown1.options.Insert(index1, newItem);
+        dropdown1.RefreshShownValue();
+    }
+    public void AddIt() // add new fish species
     {
         int check = PlayerPrefs.GetInt("FilterCheck");
         if(check == 0)
         {
-            Test1();
+            AddNewSpecies();
         }
         else
         {
@@ -191,36 +182,42 @@ public class Dropdown2 : MonoBehaviour
         }
         
     }
-
-    public void Test2(string number, int increment)
+    void ChangeBackend(string number, int increment, bool check) // changes csv file
     {
         //Read all lines from text file
         String[] lines = File.ReadAllLines(filepath);
-        //string selectedOption = dropdown1.options[index1].text;
-        //string NumberString = Regex.Match(selectedOption, @"\d+").Value;
-        //int resultNo = Int32.Parse(NumberString) + 1;
-        for(int i = 0; i <= lines.Length; i++) 
+        if(increment > 0)
         {
-            if(i == index1)
-            {
-                counter++;
-                Debug.Log(counter);
-                string sum = (lines[i].Split(',')[3]);
-                string PointsNo = (lines[i].Split(',')[1]);
-                int strlength = number.Length + sum.Length + 1;
-                Debug.Log(increment);
-                int intsum = Int32.Parse(sum);
-                int intPoints = Int32.Parse(PointsNo);
-                int newsum = (intPoints*counter + intsum);
-                Debug.Log(newsum);
-                lines[i] = lines[i].Substring(0, lines[i].Length-strlength) + newsum + "," + increment;
+            for(int i = 0; i <= lines.Length; i++) 
+            {  
+                if(i == index1)
+                {
+                    string sum = (lines[i].Split(',')[3]);
+                    string PointsNo = (lines[i].Split(',')[1]);
+                    int strlength = number.Length + sum.Length + 1;
+                    int intsum = Int32.Parse(sum);
+                    int intPoints = Int32.Parse(PointsNo);
+                    if(check == true)
+                    {
+                        newsum = (intsum + intPoints);
+                    }
+                    else
+                    {
+                        newsum = (intsum - intPoints);
+                    }
+                    lines[i] = lines[i].Substring(0, lines[i].Length-strlength) + newsum + "," + increment;
+                }
             }
+        File.WriteAllLines(filepath, lines); // re-write it to file
         }
-        //Rewrite lines to file
-        File.WriteAllLines(filepath, lines);
+        else // delete once number of fish hits zero
+        {
+            DeleteLine(index1);
+            dropdown1.options.RemoveAt(index1); 
+        }
         UpdateInspector();
     }
-    void Test1()
+    void AddNewSpecies()
     {
         string addtofile = dropdown.options[dropdown.value].text; 
         if(fishselection != "Select Species" && filterindex != 0)
@@ -271,16 +268,14 @@ public class Dropdown2 : MonoBehaviour
     public void setIndex(int varIndex)
     {
         this.index1 = varIndex;
-        counter = 0;
         print(index1);
     }
 
     public void DeleteIt()
     {
-        List<Dropdown.OptionData> list = dropdown1.options;
-        if(list.Count != 0)
+        if(dropdown1.options.Count != 0)
         {
-            if(index1 < list.Count)
+            if(index1 < dropdown1.options.Count)
             {
                 string Deleted = dropdown1.options[index1].text;
                 dropdown1.options.RemoveAt(index1); 
@@ -289,7 +284,7 @@ public class Dropdown2 : MonoBehaviour
                 DeleteLine(index1);
                 UpdateInspector();
             }
-            else if(index1 >= list.Count)
+            else if(index1 >= dropdown1.options.Count)
             {
                 error.text = ("Please chose which fish to delete"); // have to select which one to delete
             }
@@ -315,7 +310,6 @@ public class Dropdown2 : MonoBehaviour
     {
         dropdown1.ClearOptions();
         System.IO.File.WriteAllText(filepath,string.Empty);
-        counter = 0;
         index1 = 0;
         UpdateInspector();
     }
@@ -451,6 +445,3 @@ public class Dropdown2 : MonoBehaviour
     } 
 }
 }
-/*string text = File.ReadAllText(filepath);
-    text = text.Replace("Black", "Crimson");
-    File.WriteAllText(filepath, text); */

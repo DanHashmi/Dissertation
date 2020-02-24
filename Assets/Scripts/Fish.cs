@@ -20,7 +20,7 @@ public class Fish : MonoBehaviour
 	// Use this for initialization  
 	void Start () {
 		speed = Random.Range (minspeed, maxspeed);
-		// this.GetComponent<Animation>()["SardineAnimatorController"].speed = speed;
+		this.GetComponent<Animation>()["Motion"].speed = speed;
 	}
 	
 	// Update is called once per frame
@@ -35,7 +35,7 @@ public class Fish : MonoBehaviour
 				Quaternion.LookRotation (direction),
 				TurnSpeed () * Time.deltaTime);
 			speed = Random.Range (minspeed, maxspeed);
-			// this.GetComponent<Animation>()["SardineAnimatorController"].speed = speed;
+			this.GetComponent<Animation>()["Motion"].speed = speed;
 		} 
 		else 
 		{
@@ -108,7 +108,7 @@ public class Fish : MonoBehaviour
 		{
 			vCenter = vCenter / groupSize + (goalPos - this.transform.position);
 			speed = gSpeed / groupSize;
-			// this.GetComponent<Animation>()["SardineAnimatorController"].speed = speed;
+			this.GetComponent<Animation>()["Motion"].speed = speed;
 
 			Vector3 direction = (vCenter + vAvoid) - transform.position;
 			if (direction != Vector3.zero) 
