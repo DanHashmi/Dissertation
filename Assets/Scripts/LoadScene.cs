@@ -11,11 +11,12 @@ public class LoadScene : MonoBehaviour
     public Dropdown dropdown;
     [SerializeField]
     private InputField input;
+    private string filepath = @"Assets\Scripts\CSVTextFile.txt";
 
     public void SceneLoader(int SceneIndex)
     {
         SceneManager.LoadScene(SceneIndex);
-        System.IO.File.WriteAllText(@"Assets\Scripts\CSVTextFile.txt", string.Empty);
+        System.IO.File.WriteAllText(filepath, string.Empty);
     }
 
     public void ConditionalSceneLoader(int sceneindex)
@@ -40,7 +41,7 @@ public class LoadScene : MonoBehaviour
         if(PlayerPrefs.GetInt("SumCheck")==1 && PlayerPrefs.GetInt("CompatCheck")==1)
         {
             SceneManager.LoadScene(Sceneindex2);
-            System.IO.File.WriteAllText(@"Assets\Scripts\CSVTextFile.txt", string.Empty);
+            System.IO.File.WriteAllText(filepath, string.Empty);
         }
 
         else
