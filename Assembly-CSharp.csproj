@@ -97,9 +97,12 @@
      <Compile Include="Assets\Scripts\Dropdown2.cs" />
      <Compile Include="Assets\Scripts\DropDownExample.cs" />
      <Compile Include="Assets\Scripts\DropdownFilter.cs" />
+     <Compile Include="Assets\Scripts\enemyScript.cs" />
      <Compile Include="Assets\Scripts\Fish.cs" />
      <Compile Include="Assets\Scripts\GlobalFlock.cs" />
      <Compile Include="Assets\Scripts\LoadScene.cs" />
+     <Compile Include="Assets\Scripts\move.cs" />
+     <Compile Include="Assets\Scripts\playerMove.cs" />
      <Compile Include="Assets\Scripts\TankResidents.cs" />
      <Compile Include="Assets\Scripts\TempFish.cs" />
      <Compile Include="Assets\Scripts\UnderWaterEffect.cs" />
@@ -179,7 +182,7 @@
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-     <None Include="Assets\Fish-Project\Shader\Alpha_Texture.shader" />
+     <None Include="Assets\FishProject\Shader\Alpha_Texture.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\Free_Rocks\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />

@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEditor;
 using System.Text;
 using System.Text.RegularExpressions;
+using TMPro;
 
 namespace fishtanksoftware
 {
@@ -25,8 +26,8 @@ public class Dropdown2 : MonoBehaviour
     public InputField EraseField;
     public Text inputFieldText;
     public Text console;
+    public TMP_Text UserInterface;
     public Text error;
-    public Text nameinfo;
     public Text colourinfo;
     [SerializeField]
     private InputField TopInputField;
@@ -44,26 +45,28 @@ public class Dropdown2 : MonoBehaviour
     private int[] testsum;
     private string[] ColourArray;
     private string[] csvdata;
+    private string fishinfo;
     private int index1;
     private int sum1;
     private int filterindex;
+    public static bool AquariumCheck = false;
     private int newsum;
     private string filepath = @"Assets\Scripts\CSVTextFile.txt";
     public float maxWidth = 250f;
 
-    public void DropDown_IndexChanged(int varIndex) //no need for varIndex
+    public void DropDown_IndexChanged(int varIndex) 
     {
         fishselection = dropdown.options[varIndex].text;
-        SelectedName.text = fishselection;
-
         if(fishselection == "Select Species")
         {
             SelectedName.color = Color.red;
+            SelectedName.text = fishselection;
         }
         else 
         {
             SelectedName.color = Color.white;
-            RetrieveValues(fishselection); // issue where filter index does not change
+            string fishinformation = RetrieveValues(fishselection);
+            SelectedName.text = fishinformation; 
         }
     }
 
@@ -154,12 +157,12 @@ public class Dropdown2 : MonoBehaviour
             }
             else
             {
-                error.text = ("Please select fish from dropdown menu");
+                console.text = ("Please select fish from dropdown menu");
             }
         }
         else
         {
-           error.text = ("List is Empty");
+           console.text = ("List is Empty");
         }
     }
     void AddNewItem(int change, string OnlyCharacters) //adds new item to menu
@@ -178,7 +181,7 @@ public class Dropdown2 : MonoBehaviour
         }
         else
         {
-            error.text = ("Please select Fish Species");
+            console.text = ("Please select Fish Species");
         }
         
     }
@@ -230,7 +233,7 @@ public class Dropdown2 : MonoBehaviour
                     dropdown1.options.Add(new Dropdown.OptionData(){text = inputFieldText.text + " " +AddWithColour});
                     intVal = Convert.ToInt32(inputFieldText.text);
                     sum1 = Fpoints * intVal;                
-                    console.text = ("In total, " + Fname + " is " + sum1 + " points! Traffic Lights Colour = " + Trafficlights);
+                    UserInterface.text = ("In total, " + Fname + " is " + sum1 + " points! Traffic Lights Colour = " + Trafficlights);
                     EraseField.text = "";
                     dropdown1.RefreshShownValue();
                     AddCSV(addtofile, Fpoints, Trafficlights, sum1, intVal, filepath);
@@ -243,12 +246,12 @@ public class Dropdown2 : MonoBehaviour
             }
             else
             {
-                error.text = ("Please enter a number");
+                console.text = ("Please enter a number");
             }
         }
         else
         {
-            error.text = ("Please select Fish Species");
+            console.text = ("Please select Fish Species");
         }
     }
 
@@ -286,12 +289,12 @@ public class Dropdown2 : MonoBehaviour
             }
             else if(index1 >= dropdown1.options.Count)
             {
-                error.text = ("Please chose which fish to delete"); // have to select which one to delete
+                console.text = ("Please chose which fish to delete"); // have to select which one to delete
             }
         }
         else
         {
-            error.text = ("List is Empty");
+            console.text = ("List is Empty");
         } 
     }
 
@@ -343,20 +346,22 @@ public class Dropdown2 : MonoBehaviour
 
         if(sum <= intAquarium)
         {
-            console.text = ("Aquarium good to go! Points = " + sum);
-            int checking = 1;
-            PlayerPrefs.SetInt("SumCheck", checking);
+            UserInterface.text = ("Aquarium good to go! Points = " + sum);
+            AquariumCheck = true;
+            //int checking = 1;
+            //PlayerPrefs.SetInt("SumCheck", checking);
             FishCompatibility(StartString);
         }
         else
         {
-            int checking = 0;
-            PlayerPrefs.SetInt("SumCheck", checking);
-            console.text = ("Aquarium Overcrowded : Points = " + sum + ". Please change fish or aquarium selection");
+            //int checking = 0;
+            //PlayerPrefs.SetInt("SumCheck", checking);
+            AquariumCheck = false;
+            UserInterface.text = ("Aquarium Overcrowded : Points = " + sum + ". Please change fish or aquarium selection");
         }
     }
     
-    void RetrieveValues(string text) //could have it for 2nd dropdown too
+    string RetrieveValues(string text) //could have it for 2nd dropdown too
     {
         for(int i = 0; i < intArray1.Length; i++)
         {
@@ -365,10 +370,11 @@ public class Dropdown2 : MonoBehaviour
                 filterindex = intArray1[i];
                 Fpoints = TempResidents[i].PointsValue;
                 Fname = TempResidents[i].Name;
-                nameinfo.text = (Fname + " is " + Fpoints + " points");
                 Trafficlights = TempResidents[i].TrafficLightsColour;
+                fishinfo = (Fname + " is " + Fpoints + " points");
             }
-        }    
+        } 
+        return fishinfo;   
     }
 
      void PopulateSecond(string[] data)
@@ -401,7 +407,7 @@ public class Dropdown2 : MonoBehaviour
                 StartString += ColourArray[i] + " ";
             }
         }
-        console.text = ("Overall fish points total is " + sum);
+        UserInterface.text = ("Overall fish points total is " + sum);
         PointsSumCheck(sum);
         PlayerPrefs.SetInt("FishNumber", sum1);
     }

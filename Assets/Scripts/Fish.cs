@@ -7,17 +7,13 @@ public class Fish : MonoBehaviour
 {
     GlobalFlock GlobalFlock = new GlobalFlock();
 	public float speed = 0.001f;
-	//float rotationSpeed = 4.0f;
-	//public float turnSpeed = 4.0f;
 	float minspeed = 0.8f;
 	float maxspeed = 2.0f; 
-	Vector3 averageHeading;
-	Vector3 averagePosition;
+	// Vector3 averageHeading;
+	// Vector3 averagePosition;
 	float neighborDistance = 2.0f; //used to be 3
     public Vector3 newGoalPos;
 	bool turning = false; 
-
-	// Use this for initialization  
 	void Start () {
 		speed = Random.Range (minspeed, maxspeed);
 		this.GetComponent<Animation>()["Motion"].speed = speed;
@@ -100,7 +96,6 @@ public class Fish : MonoBehaviour
 					Fish anotherFish = go.GetComponent<Fish> ();
 					gSpeed += anotherFish.speed;
 				}
-
 			}
 		}
 

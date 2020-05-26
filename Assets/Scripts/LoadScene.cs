@@ -25,7 +25,7 @@ public class LoadScene : MonoBehaviour
         {
             Debug.Log("Please select aquarium!");
         }
-        else if(input.text != ":)")
+        else if(input.text != "Entered")
         {
             Debug.Log("Plese enter aquarium capacity!");
         }
@@ -38,10 +38,9 @@ public class LoadScene : MonoBehaviour
     }
     public void FinalSceneLoader(int Sceneindex2)
     {
-        if(PlayerPrefs.GetInt("SumCheck")==1 && PlayerPrefs.GetInt("CompatCheck")==1)
+        if(Dropdown2.AquariumCheck == true && PlayerPrefs.GetInt("CompatCheck")==1)
         {
             SceneManager.LoadScene(Sceneindex2);
-            System.IO.File.WriteAllText(filepath, string.Empty);
         }
 
         else
